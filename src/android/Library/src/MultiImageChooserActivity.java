@@ -415,8 +415,6 @@ public class MultiImageChooserActivity extends Activity
                 maxImages--;
             }
         }
-        
-        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_title_textview"))).setText((maxImageCount - maxImages) + " foto's");
         updateAcceptButton();
     }
 
