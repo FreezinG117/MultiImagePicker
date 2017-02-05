@@ -133,7 +133,7 @@ public class MultiImageChooserActivity extends Activity
 
         boolean permission_granted = true;
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             int hasReadExternalStoragePermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
             List<String> m_permissions = new ArrayList<String>();
             if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
