@@ -301,8 +301,7 @@ public class MultiImageChooserActivity extends Activity
     }
 
     public void selectClicked(View ignored) {
-        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview")))
-                .setEnabled(false);
+        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview"))).setEnabled(false);
         getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(false);
         progress.show();
         Intent data = new Intent();
@@ -436,8 +435,7 @@ public class MultiImageChooserActivity extends Activity
         private final Bitmap mPlaceHolderBitmap;
 
         public ImageAdapter(Context c) {
-            Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(),
-                    fakeR.getId("drawable", "loading_icon"));
+            Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "loading_icon"));
             mPlaceHolderBitmap = Bitmap.createScaledBitmap(tmpHolderBitmap, colWidth, colWidth, false);
             if (tmpHolderBitmap != mPlaceHolderBitmap) {
                 tmpHolderBitmap.recycle();
