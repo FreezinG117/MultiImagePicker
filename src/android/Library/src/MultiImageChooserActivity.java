@@ -25,7 +25,7 @@
  * POSSIBILITY OF SUCH  DAMAGE
  *
  * Code modified by Andrew Stephan for Sync OnSet
- * Code modified by Daniel Oliveira for we-xperience
+ *
  */
 
 package com.synconset;
@@ -130,6 +130,28 @@ public class MultiImageChooserActivity extends Activity
         super.onCreate(savedInstanceState);
         fakeR = new FakeR(this);
         setContentView(fakeR.getId("layout", "multiselectorgrid"));
+
+        boolean permission_granted = true;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int hasReadExternalStoragePermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            List<String> m_permissions = new ArrayList<String>();
+            if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+                m_permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                permission_granted = false;
+            }
+            if (m_permissions.size() > 0) {
+                String[] m_permissions_string = new String[m_permissions.size()];
+                m_permissions.toArray(m_permissions_string);
+                requestPermissions(m_permissions_string, 1001);
+            }
+        }
+        if (permission_granted) {
+            proceedLoading();
+        }
+    }
+
+    private void proceedLoading() {
         fileNames.clear();
 
         maxImages = getIntent().getIntExtra(MAX_IMAGES_KEY, NOLIMIT);
@@ -301,7 +323,8 @@ public class MultiImageChooserActivity extends Activity
     }
 
     public void selectClicked(View ignored) {
-        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview"))).setEnabled(false);
+        ((TextView) getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done_textview")))
+                .setEnabled(false);
         getActionBar().getCustomView().findViewById(fakeR.getId("id", "actionbar_done")).setEnabled(false);
         progress.show();
         Intent data = new Intent();
@@ -435,7 +458,8 @@ public class MultiImageChooserActivity extends Activity
         private final Bitmap mPlaceHolderBitmap;
 
         public ImageAdapter(Context c) {
-            Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "loading_icon"));
+            Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(),
+                    fakeR.getId("drawable", "loading_icon"));
             mPlaceHolderBitmap = Bitmap.createScaledBitmap(tmpHolderBitmap, colWidth, colWidth, false);
             if (tmpHolderBitmap != mPlaceHolderBitmap) {
                 tmpHolderBitmap.recycle();
@@ -523,6 +547,7 @@ public class MultiImageChooserActivity extends Activity
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 1;
                     options.inJustDecodeBounds = true;
+                    al.add(Uri.fromFile(file).toString());
                     BitmapFactory.decodeFile(file.getAbsolutePath(), options);
                     int width = options.outWidth;
                     int height = options.outHeight;
