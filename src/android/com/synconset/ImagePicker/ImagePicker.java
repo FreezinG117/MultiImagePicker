@@ -31,6 +31,7 @@ public class ImagePicker extends CordovaPlugin {
 			int desiredWidth = 0;
 			int desiredHeight = 0;
 			int quality = 100;
+			String selectedImages = "";
 			if (this.params.has("maximumImagesCount")) {
 				max = this.params.getInt("maximumImagesCount");
 			}
@@ -43,6 +44,10 @@ public class ImagePicker extends CordovaPlugin {
 			if (this.params.has("quality")) {
 				quality = this.params.getInt("quality");
 			}
+			if(this.params.has("selectedImages")){
+				selectedImages = this.params.getString("selectedImages");
+			}
+			intent.putExtra("SELECTED_IMAGES", selectedImages);
 			intent.putExtra("MAX_IMAGES", max);
 			intent.putExtra("WIDTH", desiredWidth);
 			intent.putExtra("HEIGHT", desiredHeight);
